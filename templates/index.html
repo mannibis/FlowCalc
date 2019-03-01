@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1>Calculate Flowrates</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.pipe_diameter_field.label }}<br>
+            {{ form.pipe_diameter_field(size=16) }}<br>
+            {% for error in form.pipe_diameter_field.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.delta_p_field.label }}<br>
+            {{ form.delta_p_field(size=16) }}<br>
+            {% for error in form.delta_p_field.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.pipe_length_field.label }}<br>
+            {{ form.pipe_length_field(size=16) }}<br>
+            {% for error in form.pipe_length_field.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <hr>
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+    {% if execute %}
+    <hr>
+    <ul>
+        <li><strong>Q (laminar) = </strong>{{ q_lam_imp }}</li>
+        <li><strong>Q (turb) = </strong>{{ q_turb_imp }}</li>
+        <li><strong>V (turb) = </strong>{{ v_turb_imp }}</li>
+        <li><strong>Reynolds # = </strong>{{ r_num }}</li>
+    </ul>
+    {% endif %}
+</body>
+</html>
