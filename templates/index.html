@@ -15,21 +15,21 @@
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
-            {{ form.pipe_diameter_field.label }}<br>
+            {{ form.pipe_diameter_field.label }}:<br>
             {{ form.pipe_diameter_field(size=24) }}<br>
             {% for error in form.pipe_diameter_field.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
-            {{ form.delta_p_field.label }}<br>
+            {{ form.delta_p_field.label }}:<br>
             {{ form.delta_p_field(size=24) }}<br>
             {% for error in form.delta_p_field.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
-            {{ form.pipe_length_field.label }}<br>
+            {{ form.pipe_length_field.label }}:<br>
             {{ form.pipe_length_field(size=24) }}<br>
             {% for error in form.pipe_length_field.errors %}
             <span style="color: red;">[{{ error }}]</span>
