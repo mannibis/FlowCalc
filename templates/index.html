@@ -4,27 +4,33 @@
     <meta charset="UTF-8">
     <title>{{ title }}</title>
 </head>
-<body>
-    <h1>Calculate Flowrates</h1>
+<body style="font-family:Verdana" bgcolor="#D3D3D3">
+    <h1><u>Flowrate Calculator for Water in Pipe</u></h1>
+    <h3>
+        If the flow in the pipe is laminar, you can use the Poiseuille Equation to calculate the flow rate.
+        Unless the pipe length is significantly large, the flow will probably be turbulent. In that case,
+        we can use Bernoulli's Equation with a friction term. Below we will calculate both flowrates as well as
+        the Reynolds number to see which equation yields the more accurate result for the parameters given.
+    </h3>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
             {{ form.pipe_diameter_field.label }}<br>
-            {{ form.pipe_diameter_field(size=16) }}<br>
+            {{ form.pipe_diameter_field(size=24) }}<br>
             {% for error in form.pipe_diameter_field.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.delta_p_field.label }}<br>
-            {{ form.delta_p_field(size=16) }}<br>
+            {{ form.delta_p_field(size=24) }}<br>
             {% for error in form.delta_p_field.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.pipe_length_field.label }}<br>
-            {{ form.pipe_length_field(size=16) }}<br>
+            {{ form.pipe_length_field(size=24) }}<br>
             {% for error in form.pipe_length_field.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
@@ -45,10 +51,9 @@
     {% if execute %}
     <hr>
     <ul>
-        <li><strong>Q (laminar) = </strong>{{ q_lam_imp }}</li>
-        <li><strong>Q (turb) = </strong>{{ q_turb_imp }}</li>
-        <li><strong>V (turb) = </strong>{{ v_turb_imp }}</li>
-        <li><strong>Reynolds # = </strong>{{ r_num }}</li>
+        <li style="font-size:120%"><strong><span style="color:#000080">Q (laminar)</span>&emsp;&emsp;=&emsp;</strong>{{ q_lam_imp }}&emsp;GPM</li>
+        <li style="font-size:120%"><strong><span style="color:#000080">Q (turbulent)</span>&emsp;=&emsp;</strong>{{ q_turb_imp }}&emsp;GPM</li>
+        <li style="font-size:120%"><strong><span style="color:#000080">Reynolds Number</span>&emsp;=&emsp;</strong>{{ r_num }}</li>
     </ul>
     {% endif %}
 </body>
