@@ -9,6 +9,7 @@ app.config.from_object(Config)
 
 
 @app.route('/', methods=['GET', 'POST'])
+@app.route('/calc', methods=['GET', 'POST'])
 def calc():
     form = CalcForm()
 
