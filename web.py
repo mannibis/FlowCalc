@@ -1,9 +1,7 @@
-from flask import Flask, render_template, flash, redirect, url_for
+from flask import Flask, render_template, flash
 from config import Config
 from forms import CalcForm
-from calc import pois_metric
-from calc import bern_metric
-from calc import reynolds_num
+from calc import pois_metric, bern_metric, reynolds_num, bern_max_metric
 from decimal import Decimal
 
 app = Flask(__name__)
@@ -22,8 +20,16 @@ def calc():
 
         flow_rate_lam_imp = None
         flow_rate_turb_imp = None
-        # velocity_imp = None
+        flow_rate_max_imp = None
         reynolds_number = None
+
+        try:
+            flow_rate_max_metric = bern_max_metric(pipe_diameter_metric, delta_p_metric)
+            flow_rate_max_imp = "%.2f" % Decimal(flow_rate_max_metric * 15850.3)
+        except ValueError:
+            flash("There was a math value error. Check your numbers and try again.")
+        except TypeError:
+            flash("There was a type error. Make sure you are entering numbers without units and try again.")
 
         try:
             flow_rate_lam_metric = pois_metric(pipe_diameter_metric, delta_p_metric, pipe_length_metric)
@@ -52,9 +58,9 @@ def calc():
         except TypeError:
             flash("There was a type error. Make sure you are entering numbers without units and try again.")
 
-        return render_template('index.html', title='Flowrate Calculator', form=form, execute=True,
+        return render_template('index.html', title='Water Flow Calculator', form=form, execute=True,
                                q_lam_imp=flow_rate_lam_imp, q_turb_imp=flow_rate_turb_imp,
-                               r_num=reynolds_number)
+                               r_num=reynolds_number, q_max_imp=flow_rate_max_imp)
     return render_template('index.html', title='Flowrate Calculator', form=form, execute=False)
 
 

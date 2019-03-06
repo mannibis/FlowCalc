@@ -2,6 +2,18 @@ import math
 from decimal import Decimal
 
 
+def bern_max_metric(pipe_diameter, delta_p):
+    """If the pipe is too short, the Hagen-Poiseuille equation may result in unphysically high flow rates; the flow
+    is bounded by Bernoulli's principle, under less restrictive conditions:
+    Qmax = ((pi * D^2) / 4) * sqrt((2 * delta_p) / rho)
+    """
+
+    rho = 1000  # density of water kg/m^3
+    flow_rate_max = ((math.pi * (pipe_diameter**2)) / 4) * math.sqrt((2 * delta_p) / rho)
+
+    return flow_rate_max
+
+
 def pois_metric(pipe_diameter, delta_p, pipe_length):
     """If the flow in the pipe is laminar, you can use the Poiseuille Equation to calculate the flow rate
         mu = 0.001 @ 25 degrees C
@@ -58,6 +70,15 @@ def main():
         flow_rate_lam_metric = pois_metric(pipe_diameter_metric, delta_p_metric, pipe_length_metric)
         flow_rate_lam_imp = flow_rate_lam_metric * 15850.3
         print "Q (laminar)\t\t=\t%.2f gpm" % Decimal(flow_rate_lam_imp)
+    except ValueError:
+        print "There was a math value error. Check your numbers and try again."
+    except TypeError:
+        print "There was a type error. Make sure you are entering numbers without units and try again."
+
+    try:
+        flow_rate_max_metric = bern_max_metric(pipe_diameter_metric, delta_p_metric)
+        flow_rate_max_imp = flow_rate_max_metric * 15850.3
+        print "Q (max)\t\t=\t%.2f gpm" % Decimal(flow_rate_max_imp)
     except ValueError:
         print "There was a math value error. Check your numbers and try again."
     except TypeError:
