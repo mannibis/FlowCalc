@@ -54,14 +54,16 @@ def reynolds_num(pipe_diameter, delta_p, pipe_length):
     return reynolds
 
 
-def main():
-    print "Enter Water Pressure (psig):  "
+if __name__ == "__main__": 
+
+    print("Enter Water Pressure (psig):  ")
     delta_p = input()
-    print "Enter Pipe Diameter (inches):  "
+    print("Enter Pipe Diameter (inches):  ")
     pipe_diameter = input()
-    print "Enter Length of Pipe (feet):  "
+    print("Enter Length of Pipe (feet):  ")
     pipe_length = input()
 
+    '''metric conversions'''
     pipe_diameter_metric = 0.0254 * float(pipe_diameter)
     pipe_length_metric = 0.3048 * float(pipe_length)
     delta_p_metric = 6894.76 * float(delta_p)
@@ -69,37 +71,38 @@ def main():
     try:
         flow_rate_lam_metric = pois_metric(pipe_diameter_metric, delta_p_metric, pipe_length_metric)
         flow_rate_lam_imp = flow_rate_lam_metric * 15850.3
-        print "Q (laminar)\t\t=\t%.2f gpm" % Decimal(flow_rate_lam_imp)
+        print("Q (laminar)\t=\t%.2f gpm" % Decimal(flow_rate_lam_imp))
     except ValueError:
-        print "There was a math value error. Check your numbers and try again."
+        print("There was a math value error. Check your numbers and try again.")
     except TypeError:
-        print "There was a type error. Make sure you are entering numbers without units and try again."
+        print("There was a type error. Make sure you are entering numbers without units and try again.")
 
     try:
         flow_rate_max_metric = bern_max_metric(pipe_diameter_metric, delta_p_metric)
         flow_rate_max_imp = flow_rate_max_metric * 15850.3
-        print "Q (max)\t\t=\t%.2f gpm" % Decimal(flow_rate_max_imp)
+        print("Q (max)\t\t=\t%.2f gpm" % Decimal(flow_rate_max_imp))
     except ValueError:
-        print "There was a math value error. Check your numbers and try again."
+        print("There was a math value error. Check your numbers and try again.")
     except TypeError:
-        print "There was a type error. Make sure you are entering numbers without units and try again."
+        print("There was a type error. Make sure you are entering numbers without units and try again.")
 
     try:
         flow_rate_turb_metric = bern_metric(pipe_diameter_metric, delta_p_metric, pipe_length_metric)[0]
         velocity_metric = bern_metric(pipe_diameter_metric, delta_p_metric, pipe_length_metric)[1]
         flow_rate_turb_imp = flow_rate_turb_metric * 15850.3
         velocity_imp = velocity_metric * 3.28084
-        print "Q (turbulent)\t=\t%.2f gpm" % Decimal(flow_rate_turb_imp)
-        print "V (turbulent)\t=\t%.2f ft/s" % Decimal(velocity_imp)
+        print("Q (turbulent)\t=\t%.2f gpm" % Decimal(flow_rate_turb_imp))
+        print("V (turbulent)\t=\t%.2f ft/s" % Decimal(velocity_imp))
     except ValueError:
-        print "There was a math value error. Check your numbers and try again."
+        print("There was a math value error. Check your numbers and try again.")
     except TypeError:
-        print "There was a type error. Make sure you are entering numbers without units and try again."
+        print("There was a type error. Make sure you are entering numbers without units and try again.")
 
     try:
-        print "Reynolds Number\t=\t%.2E" % Decimal(
-            reynolds_num(pipe_diameter_metric, delta_p_metric, pipe_length_metric))
+        print("Reynolds Number\t=\t%.2E" % Decimal(
+            reynolds_num(pipe_diameter_metric, delta_p_metric, pipe_length_metric)))
     except ValueError:
-        print "There was a math value error. Check your numbers and try again."
+        print("There was a math value error. Check your numbers and try again.")
     except TypeError:
-        print "There was a type error. Make sure you are entering numbers without units and try again."
+        print("There was a type error. Make sure you are entering numbers without units and try again.")
+
